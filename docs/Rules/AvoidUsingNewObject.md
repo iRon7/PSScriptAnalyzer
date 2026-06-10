@@ -58,14 +58,14 @@ for ($i = 0; $i -lt 100000; $i++) {
 ```
 
 ```powershell
-$hashSet = [System.Collections.Generic.HashSet[String]]([StringComparer]::InvariantCultureIgnoreCase)
+$hashSet = [System.Collections.Generic.HashSet[String]]::new([StringComparer]::InvariantCultureIgnoreCase)
 ```
 
 ## Configuration
 
 ```powershell
 Rules = @{
-    PSAvoidNewObject  = @{
+    PSAvoidUsingNewObject  = @{
         Enable = $true
     }
 }

@@ -12,9 +12,9 @@ BeforeDiscovery {
         $errors = $Null
         $null = [Parser]::ParseInput($ActualValue, [ref]$null, [ref]$errors)
         $succeeded = -not $errors -xor $Negate
-        if ($succeeded) {
+        if (-not $succeeded) {
             $not = if ($Negate) { ' not' }
-            $failureMessage = "Expected '$ActualValue' to$Not parse$(if($Because) { " because $Because"})."
+            $failureMessage = "Expected '$ActualValue'$Not to parse$(if($Because) { " because $Because"})."
         }
 
         return [PSCustomObject]@{

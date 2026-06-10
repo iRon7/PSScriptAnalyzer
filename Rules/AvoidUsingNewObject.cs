@@ -23,13 +23,23 @@ namespace Microsoft.Windows.PowerShell.ScriptAnalyzer.BuiltinRules
     /// The rule implements a correction that suggests using type-casting or type constructor.
     ///
     /// Note:
-    /// In case a automatic correction isn't available, the rule won't report any violation either.
-    /// This is because if there isn't an automatic correction available, it means that the there
-    /// isn't a simple type-casting or type constructor that can be used as a replacement that
-    /// would be more efficient or has a better syntax than using New-Object.
-    /// In other words, if the `-ComObject` parameter is used, or both the parameters
+    /// In most cases if there isn't an automatic correction isn't available,
+    /// the rule won't report any violation either.
+    /// This is because if there isn't an automatic correction available, it generally means
+    /// that there isn't a simple type-casting or type constructor that can be used that would
+    /// be more efficient or has a better syntax than using New-Object.
+    /// In other words, if the common `-Verbose` parameter is used, or both the parameters
     /// `-ArgumentList` and `-Property` are used, there won't be a simple type initializer
     /// available and the rule won't report any violation for the `New-Object` cmdlet.
+    ///
+    /// Nevertheless, there are still some cases where the `New-Object` cmdlet might be
+    /// replaceable with a type initializer that would be more efficient or has a better syntax,
+    /// but an automatic correction can't be provided.
+    /// For example if the `-ArgumentList` parameter is used with a variable,
+    /// the rule will report a violation, but won't be able to provide a correction,
+    /// as it's not possible to determine from the AST alone whether the variable contains a
+    /// single value that can be used in a type initializer,
+    /// or if it contains multiple values that would require splatting.
     /// </summary>
     public class AvoidUsingNewObject : ConfigurableRule
     {
