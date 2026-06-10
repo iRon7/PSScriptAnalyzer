@@ -56,7 +56,7 @@ namespace Microsoft.Windows.PowerShell.ScriptAnalyzer.BuiltinRules
         /// </summary>
         /// <param name="ast">AST to be analyzed. This should be non-null</param>
         /// <param name="fileName">Name of file that corresponds to the input AST.</param>
-        /// <returns>A an enumerable type containing the violations</returns>
+        /// <returns>An enumerable type containing the violations</returns>
         public override IEnumerable<DiagnosticRecord> AnalyzeScript(Ast ast, string fileName)
         {
             if (ast == null) throw new ArgumentNullException(Strings.NullAstErrorMessage);
