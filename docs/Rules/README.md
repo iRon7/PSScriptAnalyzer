@@ -14,6 +14,7 @@ The PSScriptAnalyzer contains the following rule definitions.
 | [AvoidAssignmentToAutomaticVariable](./AvoidAssignmentToAutomaticVariable.md)                     | Warning     |        Yes         |                 |
 | [AvoidDefaultValueForMandatoryParameter](./AvoidDefaultValueForMandatoryParameter.md)             | Warning     |        Yes         |                 |
 | [AvoidDefaultValueSwitchParameter](./AvoidDefaultValueSwitchParameter.md)                         | Warning     |        Yes         |                 |
+| [AvoidDynamicallyCreatingVariableNames](./AvoidDynamicallyCreatingVariableNames.md)               | Information |         No         |       Yes       |
 | [AvoidExclaimOperator](./AvoidExclaimOperator.md)                                                 | Warning     |         No         |                 |
 | [AvoidGlobalAliases<sup>1</sup>](./AvoidGlobalAliases.md)                                         | Warning     |        Yes         |                 |
 | [AvoidGlobalFunctions](./AvoidGlobalFunctions.md)                                                 | Warning     |        Yes         |                 |
@@ -28,6 +29,7 @@ The PSScriptAnalyzer contains the following rule definitions.
 | [AvoidShouldContinueWithoutForce](./AvoidShouldContinueWithoutForce.md)                           | Warning     |        Yes         |                 |
 | [AvoidTrailingWhitespace](./AvoidTrailingWhitespace.md)                                           | Warning     |        Yes         |                 |
 | [AvoidUsingAllowUnencryptedAuthentication](./AvoidUsingAllowUnencryptedAuthentication.md)         | Warning     |        Yes         |                 |
+| [AvoidUsingArrayList](./AvoidUsingArrayList.md)                                                   | Warning     |         No         |       Yes       |
 | [AvoidUsingBrokenHashAlgorithms](./AvoidUsingBrokenHashAlgorithms.md)                             | Warning     |        Yes         |                 |
 | [AvoidUsingCmdletAliases](./AvoidUsingCmdletAliases.md)                                           | Warning     |        Yes         | Yes<sup>2</sup> |
 | [AvoidUsingComputerNameHardcoded](./AvoidUsingComputerNameHardcoded.md)                           | Error       |        Yes         |                 |
@@ -49,8 +51,10 @@ The PSScriptAnalyzer contains the following rule definitions.
 | [DSCUseIdenticalMandatoryParametersForDSC](./DSCUseIdenticalMandatoryParametersForDSC.md)         | Error       |        Yes         |                 |
 | [DSCUseIdenticalParametersForDSC](./DSCUseIdenticalParametersForDSC.md)                           | Error       |        Yes         |                 |
 | [DSCUseVerboseMessageInDSCResource](./DSCUseVerboseMessageInDSCResource.md)                       | Error       |        Yes         |                 |
+| [InvalidMultiDotValue](./InvalidMultiDotValue.md)                                                 | Error       |         No         |       Yes       |
 | [MisleadingBacktick](./MisleadingBacktick.md)                                                     | Warning     |        Yes         |                 |
 | [MissingModuleManifestField](./MissingModuleManifestField.md)                                     | Warning     |        Yes         |                 |
+| [MissingTryBlock](./MissingTryBlock.md)                                                           | Warning     |         No         |       Yes       |
 | [PlaceCloseBrace](./PlaceCloseBrace.md)                                                           | Warning     |         No         |       Yes       |
 | [PlaceOpenBrace](./PlaceOpenBrace.md)                                                             | Warning     |         No         |       Yes       |
 | [PossibleIncorrectComparisonWithNull](./PossibleIncorrectComparisonWithNull.md)                   | Warning     |        Yes         |                 |
