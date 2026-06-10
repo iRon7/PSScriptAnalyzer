@@ -144,6 +144,19 @@ Describe "AvoidUsingNewObject" {
 
     Context 'Construct' {
 
+        It 'Empty string' {
+            $scriptDefinition = { $String = New-Object String }.ToString()
+            $violations = Invoke-ScriptAnalyzer -ScriptDefinition $scriptDefinition -Settings $Settings
+            $violations.Count                            | Should -Be 1
+            $violations.Severity                         | Should -Be Warning
+            $violations.Extent.Text                      | Should -Be 'New-Object String'
+            $violations.Message                          | Should -Be ($ruleMessage -f 'String')
+            $violations.RuleSuppressionID                | Should -Be 'String'
+            $violations.SuggestedCorrections.Text        | Should -Be '[String]::new()'
+            $violations.SuggestedCorrections.Text        | Should -Parse
+            $violations.SuggestedCorrections.Description | Should -Be ($correctionDescription -f 'String')
+        }
+
         It 'String ArgumentList ($Test)' {
             $scriptDefinition = { $String = New-Object -TypeName String -ArgumentList ($Test) }.ToString()
             $violations = Invoke-ScriptAnalyzer -ScriptDefinition $scriptDefinition -Settings $Settings
@@ -202,7 +215,7 @@ Describe "AvoidUsingNewObject" {
             $scriptDefinition = {
                 Write-Host New-Object String 123
             }.ToString()
-             $violations = Invoke-ScriptAnalyzer -ScriptDefinition $scriptDefinition -Settings $Settings
+            $violations = Invoke-ScriptAnalyzer -ScriptDefinition $scriptDefinition -Settings $Settings
             $violations | Should -BeNullOrEmpty
         }
 
@@ -267,7 +280,7 @@ Describe "AvoidUsingNewObject" {
             $violations.SuggestedCorrections.Text | Should -Parse
         }
 
-         It 'Double quoted string argument' {
+        It 'Double quoted string argument' {
             $scriptDefinition = { New-Object MyClass "Test" }.ToString()
             $violations = Invoke-ScriptAnalyzer -ScriptDefinition $scriptDefinition -Settings $Settings
             $violations.SuggestedCorrections.Text | Should -Be '[MyClass]"Test"'

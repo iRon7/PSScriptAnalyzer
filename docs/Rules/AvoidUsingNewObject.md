@@ -15,7 +15,7 @@ title: AvoidUsingNewObject
 ## Description
 
 Avoid using the `New-Object` cmdlet to create objects as it might perform poorly.
-Instead, use type initializer to construct or cast the intended object.
+Instead, use a type initializer to construct or cast the intended object.
 
 ## Example
 

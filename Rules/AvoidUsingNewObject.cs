@@ -19,11 +19,11 @@ namespace Microsoft.Windows.PowerShell.ScriptAnalyzer.BuiltinRules
 #endif
 
     /// <summary>
-    /// Rule that reports an warning when the New-Object cmdlet is used in a script.
+    /// Rule that reports a warning when the New-Object cmdlet is used in a script.
     /// The rule implements a correction that suggests using type-casting or type constructor.
     ///
     /// Note:
-    /// In most cases if there isn't an automatic correction isn't available,
+    /// In most cases if there isn't an automatic correction available,
     /// the rule won't report any violation either.
     /// This is because if there isn't an automatic correction available, it generally means
     /// that there isn't a simple type-casting or type constructor that can be used that would
@@ -63,8 +63,8 @@ namespace Microsoft.Windows.PowerShell.ScriptAnalyzer.BuiltinRules
 
             IEnumerable<CommandAst> newObjectAsts = ast.FindAll(testAst =>
                 testAst is CommandAst cmdAst &&
-                cmdAst.GetCommandName() != null &&
-                cmdAst.GetCommandName().Equals("New-Object", StringComparison.OrdinalIgnoreCase),
+                (cmdAst.GetCommandName() as string) is string commandName &&
+                commandName.Equals("New-Object", StringComparison.OrdinalIgnoreCase),
                 true
             ).Cast<CommandAst>();
 
@@ -77,7 +77,7 @@ namespace Microsoft.Windows.PowerShell.ScriptAnalyzer.BuiltinRules
                 // But not both, as that would mean there isn't a simple
                 // type initializer available as a replacement.
                 if (
-                    bindingResult.BoundParameters.Count == 2 &&
+                    bindingResult.BoundParameters.Count <= 2 &&
                     bindingResult.BoundParameters.TryGetValue("TypeName", out ParameterBindingResult asTypeName) &&
                     asTypeName.ConstantValue is string typeName
                 ) {
@@ -85,11 +85,16 @@ namespace Microsoft.Windows.PowerShell.ScriptAnalyzer.BuiltinRules
                     if (!isProperty)
                     {
                         Boolean isArgument = bindingResult.BoundParameters.TryGetValue("ArgumentList", out ParameterBindingResult argumentResult);
-                        if (isArgument) { boundResult = argumentResult; } else { continue; }
+                        if (isArgument) { boundResult = argumentResult; }
                     }
 
                     string correction = null;
-                    if (isProperty)
+                    if (boundResult == null)
+                    {
+                        // No `-Property` or `-ArgumentList` parameter was used, so we suggest a parameterless constructor call.
+                        correction = "[" + typeName + "]::new()";
+                    }
+                    else if (isProperty)
                     {
                         correction = "[" + typeName + "]" + boundResult.Value.Extent.Text;
                     }
