@@ -451,7 +451,7 @@ Describe "AvoidUsingNewObject" {
 
         It 'PSCustomObject Property' {
             $tempFile = Join-Path $TestDrive 'TestScript2.ps1'
-            Set-Content -LiteralPath $tempFile -Value {
+            Set-Content -LiteralPath $tempFile -NoNewline -Value {
                 for ($i = 0; $i -lt 100000; $i++) {
                     $resultObject = New-Object PSCustomObject -Property @{
                         Name = "Name$i"
@@ -467,7 +467,7 @@ Describe "AvoidUsingNewObject" {
 
         It 'HashSet InvariantCultureIgnoreCase' {
             $tempFile = Join-Path $TestDrive 'TestScript3.ps1'
-            Set-Content -LiteralPath $tempFile -Value {
+            Set-Content -LiteralPath $tempFile -NoNewline -Value {
                 $hashSet = New-Object `
                     -TypeName 'System.Collections.Generic.HashSet[String]' `
                     -ArgumentList ([StringComparer]::InvariantCultureIgnoreCase)
